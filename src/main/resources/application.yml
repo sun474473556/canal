@@ -1,0 +1,8 @@
+############
+canal:
+  type: Cluster,Single
+  address: 127.0.0.1
+  port: 9088
+  username:
+  password:
+  destination:

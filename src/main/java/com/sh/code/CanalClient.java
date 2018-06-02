@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class CanalClient {
 
 	public Logger logger = LoggerFactory.getLogger(CanalClient.class);
-	private static boolean running = true;
+	private boolean running = true;
 
 	public void start(CanalConnector canalConnector, String destination) throws Exception {
 		if (canalConnector == null) {
@@ -18,7 +18,7 @@ public class CanalClient {
 		}
 		int batchSize = 1024;
 		canalConnector.connect();
-		canalConnector.rollback();
+		canalConnector.rollback();//回到上次记录位置
 		canalConnector.subscribe();
 		try {
 			while (running) {

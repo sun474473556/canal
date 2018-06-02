@@ -1,25 +1,29 @@
 package com.sh.code.config;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
-@Component
+
+@Configuration
 public class CanalConfig {
 
 	@Value("${canal.address}")
 	private String address;
 
-	@Value("${canal.address}")
+	@Value("${canal.port}")
 	private int port;
 
-	@Value("${canal.address}")
+	@Value("${canal.username}")
 	private String username;
 
-	@Value("${canal.address}")
+	@Value("${canal.password}")
 	private String password;
 
-	@Value("${canal.address}")
+	@Value("${canal.destination}")
 	private String destination;
+
+	@Value("¥{canal.type}")
+	private String type;
 
 	public String getAddress() {
 		return address;
@@ -59,5 +63,13 @@ public class CanalConfig {
 
 	public void setDestination(String destination) {
 		this.destination = destination;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }

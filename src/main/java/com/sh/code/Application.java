@@ -5,9 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.alibaba.otter"})
 public class Application implements EmbeddedServletContainerCustomizer {
 
+	@Override
 	public void customize(ConfigurableEmbeddedServletContainer container) {
 		container.setPort(9999);
 	}

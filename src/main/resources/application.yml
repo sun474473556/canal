@@ -1,8 +1,8 @@
 ############
 canal:
-  type: Cluster,Single
+  type: Single #单机/集群
   address: 127.0.0.1
-  port: 9088
+  port: 11111
   username:
   password:
-  destination:
+  destination: example,oms;

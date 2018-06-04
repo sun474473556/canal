@@ -1,6 +1,6 @@
 ############
 canal:
-  type: Single #单机/集群
+  type: "Single" #单机/集群
   address: 127.0.0.1
   port: 11111
   username:

@@ -5,7 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 
-@SpringBootApplication(scanBasePackages = {"com.alibaba.otter"})
+
+@SpringBootApplication
 public class Application implements EmbeddedServletContainerCustomizer {
 
 	@Override

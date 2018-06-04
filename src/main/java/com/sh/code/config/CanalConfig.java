@@ -1,6 +1,8 @@
 package com.sh.code.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 
@@ -22,7 +24,7 @@ public class CanalConfig {
 	@Value("${canal.destination}")
 	private String destination;
 
-	@Value("¥{canal.type}")
+	@Value("${canal.type}")
 	private String type;
 
 	public String getAddress() {

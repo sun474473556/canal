@@ -6,12 +6,12 @@ import com.alibaba.otter.canal.protocol.Message;
 import com.sh.code.config.CanalConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.net.InetSocketAddress;
 
-@Service
 public class CanalClient implements Runnable{
 
 	public Logger logger = LoggerFactory.getLogger(CanalClient.class);
@@ -26,8 +26,7 @@ public class CanalClient implements Runnable{
 
 	private String tableNamel;
 
-	private CanalConnector connector = null;
-
+	private CanalConnector connector;
 
 	public CanalClient(String address, int port, String type, String destination, String password, String username) throws Exception {
 		String[] args= destination.split(",");
@@ -53,7 +52,7 @@ public class CanalClient implements Runnable{
 		connector.connect();
 		connector.rollback();//回到上次记录位置
 		//filter默认为DBName.tableName`
-		connector.subscribe("oms.oms");
+		connector.subscribe();
 		try {
 			while (running) {
 				Message message = connector.getWithoutAck(batchSize);

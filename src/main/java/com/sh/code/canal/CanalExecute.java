@@ -3,14 +3,15 @@ package com.sh.code.canal;
 import com.sh.code.config.CanalConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
-@Service
+@Component
 public class CanalExecute {
 
 	private Logger logger = LoggerFactory.getLogger(CanalExecute.class);
@@ -20,16 +21,18 @@ public class CanalExecute {
 	@Resource
 	CanalConfig canalConfig;
 
-	public CanalExecute() throws Exception {
+	private CanalClient canalClient = null;
+
+	public void init() throws Exception {
 		String[] args = canalConfig.getDestination().split(";");
 		for (String destionations : args) {
-			CanalClient canalClient = new CanalClient(canalConfig.getAddress(), canalConfig.getPort(), canalConfig.getType(),
+			canalClient = new CanalClient(canalConfig.getAddress(), canalConfig.getPort(), canalConfig.getType(),
 				destionations, canalConfig.getPassword(), canalConfig.getUsername());
-			start(canalClient);
+			start();
 		}
 	}
 
-	public void start(CanalClient canalClient) {
+	public void start() {
 		executorService.submit(canalClient);
 	}
 }

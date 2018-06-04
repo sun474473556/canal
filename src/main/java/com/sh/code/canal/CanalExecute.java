@@ -21,12 +21,13 @@ public class CanalExecute {
 	@Resource
 	CanalConfig canalConfig;
 
-	private CanalClient canalClient = null;
+	@Resource
+	CanalClient canalClient;
 
 	public void init() throws Exception {
 		String[] args = canalConfig.getDestination().split(";");
 		for (String destionations : args) {
-			canalClient = new CanalClient(canalConfig.getAddress(), canalConfig.getPort(), canalConfig.getType(),
+			canalClient.init(canalConfig.getAddress(), canalConfig.getPort(), canalConfig.getType(),
 				destionations, canalConfig.getPassword(), canalConfig.getUsername());
 			start();
 		}

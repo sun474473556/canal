@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.net.InetSocketAddress;
 
+@Component
 public class CanalClient implements Runnable{
 
 	public Logger logger = LoggerFactory.getLogger(CanalClient.class);
@@ -28,8 +29,8 @@ public class CanalClient implements Runnable{
 
 	private CanalConnector connector;
 
-	public CanalClient(String address, int port, String type, String destination, String password, String username) throws Exception {
-		String[] args= destination.split(",");
+	public void init(String address, int port, String type, String destinations, String password, String username) throws Exception {
+		String[] args= destinations.split(",");
 		this.destination = args[0];
 		this.tableNamel = args[0];
 		if (type.equals(Cluster)) {

@@ -1,13 +1,14 @@
-package com.sh.code.util;
+package code.util;
 
+import code.dto.Field;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.otter.canal.protocol.CanalEntry;
 import com.alibaba.otter.canal.protocol.Message;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import com.alibaba.otter.canal.protocol.CanalEntry.Entry;
-import com.alibaba.otter.canal.protocol.CanalEntry.EntryType;
 import com.alibaba.otter.canal.protocol.CanalEntry.EventType;
+import com.alibaba.otter.canal.protocol.CanalEntry.EntryType;
 import com.alibaba.otter.canal.protocol.CanalEntry.RowChange;
 import com.alibaba.otter.canal.protocol.CanalEntry.RowData;
 import com.alibaba.otter.canal.protocol.CanalEntry.Column;
@@ -24,10 +25,10 @@ public class MessageUtil {
 
 	private Logger logger = LoggerFactory.getLogger(MessageUtil.class);
 
-	private static final String             DATE_FORMAT        = "yyyy-MM-dd HH:mm:ss";
+	private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-	public List<String> messageCovertJson(Message message) {
-		List<String> rowList = new ArrayList<String>();
+	public List<Field> messageCovertJson(Message message) {
+		List<Field> rowList = new ArrayList<Field>();
 		//循环每行binlog
 		for (Entry entry: message.getEntries()) {
 			//binlog时间
@@ -45,12 +46,13 @@ public class MessageUtil {
 			}
 
 			//sql类型（insert、update）
-			CanalEntry.EventType eventType = rowChange.getEventType();
+			EventType eventType = rowChange.getEventType();
 
 			//binlog基础信息
 			String header_str = "{\"binlog\":\"" + entry.getHeader().getLogfileName()+ ":" + entry.getHeader().getLogfileOffset() + "\"," +
-				"\"db\":\"" + entry.getHeader().getSchemaName() + "\"," +
+				"\"dbName\":\"" + entry.getHeader().getSchemaName() + "\"," +
 				"\"table\":\"" + entry.getHeader().getTableName() + "\",";
+
 
 			//受影响 数据行
 			for (RowData rowData : rowChange.getRowDatasList()) {
@@ -71,7 +73,8 @@ public class MessageUtil {
 				}
 
 				String row_data = header_str + row_str + "\"before\":" +before + ",\"after\":" + after + ",\"time\":\"" + time +"\"}";
-				rowList.add(row_data);
+				Field field = JSON.parseObject(row_data, Field.class);
+				rowList.add(field);
 			}
 		}
 		return rowList;

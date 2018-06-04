@@ -1,10 +1,10 @@
-package com.sh.code.canal;
+package code.canal;
 
 import com.alibaba.otter.canal.client.CanalConnector;
 import com.alibaba.otter.canal.client.CanalConnectors;
 import com.alibaba.otter.canal.protocol.Message;
-import com.sh.code.config.CanalConfig;
-import com.sh.code.util.MessageUtil;
+import code.config.CanalConfig;
+import code.util.MessageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -26,6 +26,8 @@ public class CanalClient implements Runnable{
 
 	private String destination;
 
+	private String dbName;
+
 	private String tableNamel;
 
 	private CanalConnector connector;
@@ -33,8 +35,9 @@ public class CanalClient implements Runnable{
 	@Resource
 	MessageUtil messageUtil;
 
-	public void init(String address, int port, String type, String destinations, String password, String username) throws Exception {
+	public void init(String address, int port, String type, String destinations, String database, String password, String username) throws Exception {
 		String[] args= destinations.split(",");
+		this.dbName = database;
 		this.destination = args[0];
 		this.tableNamel = args[0];
 		if (type.equals(Cluster)) {
@@ -57,7 +60,7 @@ public class CanalClient implements Runnable{
 		connector.connect();
 		connector.rollback();//回到上次记录位置
 		//filter一般应该为DBName.tableName
-		connector.subscribe();
+		connector.subscribe(dbName + "." + tableNamel);
 		try {
 			while (running) {
 				Message message = connector.getWithoutAck(batchSize);

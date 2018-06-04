@@ -5,6 +5,7 @@ canal:
   port: 11111
   username:
   password:
+  dbName: oms
   destination: example,oms #监听实例/表名  db名定义在server中
 
 type:

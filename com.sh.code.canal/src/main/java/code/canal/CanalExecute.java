@@ -1,11 +1,10 @@
 package com.sh.code.canal;
 
-import com.sh.code.config.CanalConfig;
+import code.config.CanalConfig;
+import code.canal.CanalClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.concurrent.ExecutorService;
@@ -29,7 +28,7 @@ public class CanalExecute implements InitializingBean {
 		String[] args = canalConfig.getDestination().split(";");
 		for (String destionations : args) {
 			canalClient.init(canalConfig.getAddress(), canalConfig.getPort(), canalConfig.getType(),
-				destionations, canalConfig.getPassword(), canalConfig.getUsername());
+				destionations,canalConfig.getDbName(), canalConfig.getPassword(), canalConfig.getUsername());
 			start();
 		}
 	}

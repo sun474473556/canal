@@ -1,4 +1,4 @@
-package com.sh.code.config;
+package code.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -23,6 +23,9 @@ public class CanalConfig {
 
 	@Value("${canal.destination}")
 	private String destination;
+
+	@Value("${canal.dbName}")
+	private String dbName;
 
 	@Value("${canal.type}")
 	private String type;
@@ -65,6 +68,14 @@ public class CanalConfig {
 
 	public void setDestination(String destination) {
 		this.destination = destination;
+	}
+
+	public String getDbName() {
+		return dbName;
+	}
+
+	public void setDbName(String dbName) {
+		this.dbName = dbName;
 	}
 
 	public String getType() {

@@ -1,8 +1,11 @@
-############
+########canal########
 canal:
-  type: Single #单机/集群
+  type: Single #Single单机/Cluster集群
   address: 127.0.0.1
   port: 11111
   username:
   password:
-  destination: example,oms
+  destination: example,oms #监听实例/表名  db名定义在server中
+
+type:
+

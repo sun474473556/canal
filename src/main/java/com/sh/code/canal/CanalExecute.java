@@ -3,6 +3,7 @@ package com.sh.code.canal;
 import com.sh.code.config.CanalConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,7 @@ import java.util.concurrent.Executors;
 
 
 @Component
-public class CanalExecute {
+public class CanalExecute implements InitializingBean {
 
 	private Logger logger = LoggerFactory.getLogger(CanalExecute.class);
 
@@ -35,5 +36,10 @@ public class CanalExecute {
 
 	public void start() {
 		executorService.submit(canalClient);
+	}
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		init();
 	}
 }

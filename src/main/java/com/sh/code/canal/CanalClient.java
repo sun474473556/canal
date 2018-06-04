@@ -4,6 +4,7 @@ import com.alibaba.otter.canal.client.CanalConnector;
 import com.alibaba.otter.canal.client.CanalConnectors;
 import com.alibaba.otter.canal.protocol.Message;
 import com.sh.code.config.CanalConfig;
+import com.sh.code.util.MessageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -29,6 +30,9 @@ public class CanalClient implements Runnable{
 
 	private CanalConnector connector;
 
+	@Resource
+	MessageUtil messageUtil;
+
 	public void init(String address, int port, String type, String destinations, String password, String username) throws Exception {
 		String[] args= destinations.split(",");
 		this.destination = args[0];
@@ -52,18 +56,16 @@ public class CanalClient implements Runnable{
 		int batchSize = 1024;
 		connector.connect();
 		connector.rollback();//回到上次记录位置
-		//filter默认为DBName.tableName`
+		//filter一般应该为DBName.tableName
 		connector.subscribe();
 		try {
 			while (running) {
 				Message message = connector.getWithoutAck(batchSize);
 				long bachId = message.getId();
 				if (bachId == -1 || bachId == 0) {
-					//推送rabbitmq
-					System.out.println("message"+message);
+
 				} else {
-					//展示binlog
-					System.out.println("binlog"+message);
+					messageUtil.messageCovertJson(message);
 				}
 				connector.ack(bachId);
 			}

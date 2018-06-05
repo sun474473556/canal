@@ -22,19 +22,16 @@ public class ServiceConfig {
 	@Resource
 	ServiceUtil serviceUtil;
 
-	@Bean(value = "BaseService")
+	@Bean(name = "BaseService")
 	@DependsOn(value = "setApplicationContext")
 	public BaseService baseService() {
-		if (type.equals(ServiceConst.TYPE_MYSQL)) {
-			return serviceUtil.getMysqlService();
-		} else if (type.equals(ServiceConst.TYPE_REDIS)) {
-			return serviceUtil.getRedisService();
+		BaseService service = serviceUtil.getMysqlService();
+		if (type.equals(ServiceConst.TYPE_REDIS)) {
+			service = serviceUtil.getRedisService();
 		} else if (type.equals(ServiceConst.TYPE_RABBITMQ)) {
-			return serviceUtil.getRabbitMqService();
-		} else {
-			logger.error("type参数错误");
+			service =  serviceUtil.getRabbitMqService();
 		}
-		return null;
+		return service;
 	}
 
 }

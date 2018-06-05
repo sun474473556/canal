@@ -1,9 +1,11 @@
 package code.biz;
 
+import code.dto.Field;
+
 public interface BaseService {
-	int update();
+	void update(Field field);
 
-	int insert();
+	void insert(Field field);
 
-	int delete();
+	void delete(Field field);
 }

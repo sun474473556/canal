@@ -1,22 +1,23 @@
 package code.biz.impl;
 
 import code.biz.BaseService;
+import code.dto.Field;
 import org.springframework.stereotype.Service;
 
 @Service(value = "MysqlService")
 public class MysqlService implements BaseService {
+
 	@Override
-	public int update() {
-		return 0;
+	public void update(Field field) {
+
 	}
 
 	@Override
-	public int insert() {
-		return 0;
+	public void insert(Field field) {
 	}
 
 	@Override
-	public int delete() {
-		return 0;
+	public void delete(Field field) {
+
 	}
 }

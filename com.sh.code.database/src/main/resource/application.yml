@@ -11,3 +11,22 @@ canal:
   password:
   dbName: oms
   destination: example,oms #监听实例/表名  db名定义在server中
+
+
+#############  mysql  ##############
+spring:
+  datasource:
+    name: mysql
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/oms?autoReconnect=true
+    username: root
+    password: root
+
+
+#############  rabbitmq  ##############
+rabbitmq:
+  host: 127.0.0.1
+  port: 5672
+  username: guest
+  password: guest
+  virtual-host: /

@@ -35,11 +35,11 @@ abstract class AbstractHandler implements Runnable {
 		String eventType = field.getEventType();
 
 		if (eventType.equals("UPDATE")) {
-			service.update();
+			service.update(field);
 		} else if (eventType.equals("DELETE")) {
-			service.insert();
+			service.insert(field);
 		} else if (eventType.equals("INSERT")) {
-			service.insert();
+			service.insert(field);
 		} else {
 			logger.info("其他类型：" + eventType);
 		}

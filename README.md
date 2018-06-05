@@ -13,7 +13,7 @@
   canal.port | 同上
   canal.dbName | 订阅的Database name
   canal.destination | 订阅的destination，多个用；隔开，每个destination都需要指明订阅的表名，例：example,user;example1,pack。 说明：该字段对应server端的canal.instance.filter.regex配置，但是server端的这个配置实际上是没有用的，应该是个bug，所以需要在客户端配置。
-  service.type | 选择油mysql、redis、rabbitmq消费binlog
+  service.type | 选择由mysql、redis、rabbitmq消费binlog
 
 
 ### 考虑更新

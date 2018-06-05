@@ -1,5 +1,6 @@
 package code.canal;
 
+import code.dto.Field;
 import com.alibaba.otter.canal.client.CanalConnector;
 import com.alibaba.otter.canal.client.CanalConnectors;
 import com.alibaba.otter.canal.protocol.Message;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.net.InetSocketAddress;
+import java.util.List;
+import java.util.concurrent.LinkedBlockingDeque;
 
 @Component
 public class CanalClient implements Runnable{
@@ -32,14 +35,17 @@ public class CanalClient implements Runnable{
 
 	private CanalConnector connector;
 
+	private LinkedBlockingDeque<List<Field>> linkedBlockingDeque = new LinkedBlockingDeque<List<Field>>();
+
 	@Resource
 	MessageUtil messageUtil;
 
-	public void init(String address, int port, String type, String destinations, String database, String password, String username) throws Exception {
+	public void init(String address, int port, String type, String destinations, String database, String password, String username, LinkedBlockingDeque<List<Field>> linkedBlockingDeque) throws Exception {
 		String[] args= destinations.split(",");
 		this.dbName = database;
 		this.destination = args[0];
-		this.tableNamel = args[0];
+		this.tableNamel = args[1];
+		this.linkedBlockingDeque = linkedBlockingDeque;
 		if (type.equals(Cluster)) {
 			connector = CanalConnectors.newClusterConnector(address, destination,
 				username, password);
@@ -65,10 +71,11 @@ public class CanalClient implements Runnable{
 			while (running) {
 				Message message = connector.getWithoutAck(batchSize);
 				long bachId = message.getId();
-				if (bachId == -1 || bachId == 0) {
+				int size = message.getEntries().size();
+				if (bachId == -1 || size == 0) {
 
 				} else {
-					messageUtil.messageCovertJson(message);
+					linkedBlockingDeque.put(messageUtil.messageCovertJson(message));
 				}
 				connector.ack(bachId);
 			}

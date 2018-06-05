@@ -11,7 +11,7 @@ public class Application implements EmbeddedServletContainerCustomizer {
 
 	@Override
 	public void customize(ConfigurableEmbeddedServletContainer container) {
-		container.setPort(9999);
+		container.setPort(9998);
 	}
 
 	public static void main(String[] args) {

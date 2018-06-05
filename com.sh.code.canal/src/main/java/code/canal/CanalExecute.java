@@ -1,4 +1,4 @@
-package com.sh.code.canal;
+package code.canal;
 
 import code.config.CanalConfig;
 import code.canal.CanalClient;

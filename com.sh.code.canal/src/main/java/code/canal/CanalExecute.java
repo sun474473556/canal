@@ -1,12 +1,11 @@
 package code.canal;
 
 import code.config.CanalConfig;
-import code.canal.CanalClient;
 import code.dto.Field;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
+
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -15,7 +14,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 
 @Component
-public class CanalExecute implements InitializingBean {
+public class CanalExecute {
 
 	private Logger logger = LoggerFactory.getLogger(CanalExecute.class);
 
@@ -40,11 +39,6 @@ public class CanalExecute implements InitializingBean {
 
 	public void start() {
 		executorService.submit(canalClient);
-	}
-
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		init();
 	}
 
 	public LinkedBlockingDeque<List<Field>> getLinkedBlockingDeque() {

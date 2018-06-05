@@ -14,6 +14,8 @@ public class Field {
 
 	private String after;
 
+	private String time;
+
 	public String getBinlog() {
 		return binlog;
 	}
@@ -60,5 +62,13 @@ public class Field {
 
 	public void setAfter(String after) {
 		this.after = after;
+	}
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
 	}
 }

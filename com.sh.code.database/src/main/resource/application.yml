@@ -1,3 +1,7 @@
+service:
+  type: mysql
+
+
 ########canal########
 canal:
   type: Single #Single单机/Cluster集群
@@ -7,5 +11,3 @@ canal:
   password:
   dbName: oms
   destination: example,oms #监听实例/表名  db名定义在server中
-
-
